@@ -1,4 +1,4 @@
-package org.example.practice;
+package org.example.practice.exercises;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class CodingPractice {
+public class WordExercises {
 
     public static int[] wordCounts(String[] words) {
         Map<String, Integer> counters = new HashMap<>();
@@ -49,24 +49,5 @@ public class CodingPractice {
 
     private static boolean isVowel(char ch) {
         return "aeiou".chars().anyMatch(i -> i == ch);
-    }
-
-    public static Integer mostPopularNumber(int[] numbers, int length) {
-        Map<Integer, Integer> counters = new HashMap<>();
-        for(Integer i = 0; i < length; i++) {
-            Integer count = counters.getOrDefault(numbers[i],0);
-            counters.put(numbers[i], count + 1);
-        }
-        return counters.entrySet().stream().sorted(comparator()).map(entry -> entry.getKey()).findFirst().get();
-    }
-
-    private static Comparator<Map.Entry<Integer, Integer>> comparator() {
-        return ((entry1, entry2) -> {
-            if(entry1.getValue() == entry2.getValue()) {
-                return entry1.getKey().compareTo(entry1.getKey());
-            } else {
-                return entry2.getValue().compareTo(entry1.getValue());
-            }
-        });
     }
 }

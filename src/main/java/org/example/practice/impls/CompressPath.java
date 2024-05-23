@@ -2,7 +2,7 @@ package org.example.practice.impls;
 
 import java.util.Optional;
 
-public class Compress {
+public class CompressPath {
 
     public String compress(String s) {
         return compress(s, null);

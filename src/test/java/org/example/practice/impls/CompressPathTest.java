@@ -3,11 +3,11 @@ package org.example.practice.impls;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CompressTest {
+public class CompressPathTest {
 
     @Test
     public void testCompress() {
-        Compress comp = new Compress();
+        CompressPath comp = new CompressPath();
 
         Assertions.assertEquals("s4e.c1m/p6s/c6t/c6r.m3a",
                 comp.compress("stripe.com/payments/checkout/customer.maria"));
