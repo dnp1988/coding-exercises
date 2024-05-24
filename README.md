@@ -1,5 +1,5 @@
 # Coding Exercises
-Simple Coding Exercises
+Java Coding Exercises
 
 - Bidirectional Map
 - Circular Buffer

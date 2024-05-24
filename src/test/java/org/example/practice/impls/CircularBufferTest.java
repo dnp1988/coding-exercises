@@ -1,6 +1,5 @@
 package org.example.practice.impls;
 
-import org.example.practice.impls.CircularBuffer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
