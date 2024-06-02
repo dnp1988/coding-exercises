@@ -1,5 +1,6 @@
 package org.example.practice.exercises;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class WordExercisesTest {
@@ -7,6 +8,7 @@ public class WordExercisesTest {
     @Test
     public void testWordCounts() {
         String[] inputs = { "b word", "a word", "a word", "c word", "c word" };
+        int[] expected = { 2, 1, 2 };
 
         int[] results = WordExercises.wordCounts(inputs);
     }
@@ -21,7 +23,8 @@ public class WordExercisesTest {
     @Test
     public void testAvTranslate() {
         String input = "faight";
+        String expected = "favaight";
 
-        String result = WordExercises.avTranslate(input);
+        Assertions.assertEquals(expected, WordExercises.avTranslate(input));
     }
 }
