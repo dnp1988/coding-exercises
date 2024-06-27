@@ -3,9 +3,12 @@ package org.example.practice.exercises;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WordExercises {
 
@@ -50,5 +53,18 @@ public class WordExercises {
 
     private static boolean isVowel(char ch) {
         return "aeiou".chars().anyMatch(i -> i == ch);
+    }
+
+    public static Character firstNonRepeatedCharacter(Stream<Character> characterStream) {
+        Map<Character, Long> map = characterStream.collect(Collectors.groupingBy(
+                character -> character,
+                () -> new LinkedHashMap<>(),
+                Collectors.counting()));
+
+        return map.entrySet().stream()
+                .filter(entry -> entry.getValue() == 1)
+                .findFirst()
+                .map(entry -> entry.getKey())
+                .orElse(null);
     }
 }

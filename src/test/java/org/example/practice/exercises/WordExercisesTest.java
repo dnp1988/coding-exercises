@@ -3,6 +3,8 @@ package org.example.practice.exercises;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.Stream;
+
 public class WordExercisesTest {
 
     @Test
@@ -26,5 +28,10 @@ public class WordExercisesTest {
         String expected = "favaight";
 
         Assertions.assertEquals(expected, WordExercises.avTranslate(input));
+    }
+
+    @Test
+    public void testReturnFirstNonRepeatedCharacter() {
+        Assertions.assertEquals('b', WordExercises.firstNonRepeatedCharacter(Stream.of('a','a','b','c','d','d')));
     }
 }
