@@ -28,63 +28,58 @@ public class BaconNumber {
         return sharedCreditsMap.get(person);
     }
 
-    public Integer getBaconNumberDFS(String person) {
-        Map<String, Integer> memo = new HashMap<>();
+    public Integer getBaconNumberDFS(String actor) {
+        Map<String, Integer> distances = new HashMap<>();
         Set<String> revisedActors = new HashSet<>();
-        memo.put("Bacon", 0);
-        return getBaconNumberDFS(person, memo, revisedActors);
+        distances.put("Bacon", 0);
+        return getBaconNumberDFS(actor, distances, revisedActors);
     }
 
-    private Integer getBaconNumberDFS(String person, Map<String, Integer> memo, Set<String> visitedActors) {
-        Integer memoBaconNumber = memo.get(person);
+    private Integer getBaconNumberDFS(String actor, Map<String, Integer> distances, Set<String> path) {
+        Integer baconNumber = distances.get(actor);
 
-        if(memoBaconNumber != null) {
-            return memoBaconNumber;
+        if(baconNumber != null) {
+            return baconNumber;
         }
 
-        List<String> sharedCreditActors = actorsSharingCreditsWith(person);
+        List<String> sharedCreditActors = actorsSharingCreditsWith(actor);
 
         Integer lowerBaconNumber = Integer.MAX_VALUE;
-        visitedActors.add(person);
+        path.add(actor);
 
-        for(String actor : sharedCreditActors) {
-            if(memo.containsKey(actor) || !visitedActors.contains(actor)) {
-                Integer actorBaconNumber = getBaconNumberDFS(actor, memo, visitedActors);
-                lowerBaconNumber = Math.min(lowerBaconNumber, actorBaconNumber);
+        for(String connectionActor : sharedCreditActors) {
+            if(distances.containsKey(connectionActor) || !path.contains(connectionActor)) {
+                Integer connectionBaconNumber = getBaconNumberDFS(connectionActor, distances, path);
+                lowerBaconNumber = Math.min(lowerBaconNumber, connectionBaconNumber);
             }
         }
 
-        memo.put(person, lowerBaconNumber == Integer.MAX_VALUE ? Integer.MAX_VALUE : lowerBaconNumber + 1);
-        return memo.get(person);
+        distances.put(actor, lowerBaconNumber == Integer.MAX_VALUE ? Integer.MAX_VALUE : lowerBaconNumber + 1);
+        return distances.get(actor);
     }
 
-    public Integer getBaconNumberBFS(String person) {
-        if("Bacon".equals(person)) {
+    public Integer getBaconNumberBFS(String actor) {
+        if("Bacon".equals(actor)) {
             return 0;
         }
         Map<String, Integer> distances = new HashMap<>();
-        Set<String> visitedActors = new HashSet<>();
         Queue<String> unVisitedActors = new LinkedList<>();
-        distances.put(person, 0);
+        distances.put(actor, 0);
 
-        unVisitedActors.add(person);
+        unVisitedActors.add(actor);
 
         String currentActor = null;
         while(!unVisitedActors.isEmpty() && currentActor != "Bacon") {
             currentActor = unVisitedActors.poll();
 
-            visitedActors.add(currentActor);
             List<String> connections = actorsSharingCreditsWith(currentActor);
             Integer currentActorDistance = distances.get(currentActor);
 
             for(String connectionActor : connections) {
-                if(!visitedActors.contains(connectionActor)) {
+                Integer connectionActorDistance = distances.get(connectionActor);
+                if(connectionActorDistance == null) {
+                    distances.put(connectionActor, currentActorDistance + 1);
                     unVisitedActors.add(connectionActor);
-
-                    Integer connectionActorDistance = distances.get(connectionActor);
-                    if(connectionActorDistance == null || currentActorDistance + 1 < connectionActorDistance) {
-                        distances.put(connectionActor, currentActorDistance + 1);
-                    }
                 }
             }
         }
